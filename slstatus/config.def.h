@@ -65,16 +65,12 @@ static const char unknown_str[] = "n/a";
  */
 static const struct arg args[] = {
 	/* function format          argument */
-	{ datetime, "%s |",           ":%T  " },
+  { datetime, "%s |",           ":%T  " },
   { battery_state, " %s",       "BAT1"},
   { battery_perc, "%s",       "BAT1"},
   { battery_remaining, " %s |", "BAT1"},
   { cpu_freq,   "  : %s  ",       NULL},
-  { temp,       "  %s°C",         "/sys/class/thermal/thermal_zone6/temp"},
+  { temp,       "  %s°C",         "/sys/class/thermal/thermal_zone4/temp"},
+  { run_command,        " | :%s%%",     "amixer get Master | sed 's/^.*Playback [0-9]* \\[//;s/%.*$//;5q;d'"},
   { keymap,     " | %s ",           NULL},
 };
- // * battery_perc        battery percentage              battery name (BAT0)
- // *                                                     NULL on OpenBSD/FreeBSD
- // * battery_remaining   battery remaining HH:MM         battery name (BAT0)
- // *                                                     NULL on OpenBSD/FreeBSD
- // * battery_state       battery charging state          battery name (BAT0)

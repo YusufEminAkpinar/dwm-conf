@@ -25,11 +25,12 @@ static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
 static const char col_yellow[]      = "#eff54e";
+static const char col_gray_metalish[]="#868fa3";
 
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_yellow  },
+	[SchemeSel]  = { col_gray4, col_cyan,  col_gray_metalish  },
 };
 
 /* tagging */
@@ -42,8 +43,13 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	/* { "Gimp",     NULL,       NULL,       0,            1,           -1 }, */
-	   { "Steam",    NULL,       NULL,       1 << 8,       0,           -1 },
-	/* { "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 }, */
+	   { "Steam",    NULL,       NULL,       1 << 8,       0,           0 },
+	   { "Firefox",  NULL,       NULL,       1 << 1,       0,           0 },
+	   { "Firefox",  NULL,    "Picture-in-Picture",  0,    1,           0 },
+	   { "discord",  NULL,       NULL,       1 << 2,       0,           1 },
+	   { "Spotify",  NULL,       NULL,       1 << 1,       0,           1 },
+	   { "Thunar",   NULL,     "hardal - Thunar", 0,       1,          -1 },
+
 };
 
 /* layout(s) */
@@ -89,15 +95,22 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
-static const char *upvol[]   = { "amixer", "set", "Master", "5%+",     NULL };
-static const char *downvol[] = { "amixer", "set", "Master", "5%-",     NULL };
+/* static const char *upvol[]   = { "amixer", "set", "Master", "5%+", ";pkill", "slstatus", ";slstatus",    NULL }; */
+/* static const char *downvol[] = { "amixer", "set", "Master", "5%-", ";pkill", "slstatus", ";slstatus",   NULL }; */
 
 #include "shiftview.c"
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
+    { MODKEY,                       XK_e,      spawn,          SHCMD("thunar") },
+    { MODKEY,                       XK_q,      spawn,          SHCMD("xkill") },
+    { MODKEY|ShiftMask,             XK_f,      spawn,          SHCMD("xrandr --output eDP-1 --auto --left-of HDMI-1-0;xrandr --output HDMI-1-0 --auto --left-of eDP-1 --mode 1680x1050") },
     { MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("flameshot gui") },
-    { MODKEY,                       XK_Right,  spawn,          {.v = upvol   } },
-	{ MODKEY,                       XK_Left,   spawn,          {.v = downvol } },
+    { MODKEY,                       XK_Right,  spawn,          SHCMD("amixer set Master 5%+;pkill slstatus;slstatus &")},
+	{ MODKEY,                       XK_Left,   spawn,          SHCMD("amixer set Master 5%-;pkill slstatus;slstatus &")},
+	{ MODKEY,                       XK_Up,     spawn,          SHCMD("brightnessctl set 10%+") },
+	{ MODKEY,                       XK_Down,   spawn,          SHCMD("brightnessctl set 10%-") },
+	{ MODKEY|ShiftMask,             XK_Up,     spawn,          SHCMD("brightnessctl set 2%+") },
+	{ MODKEY|ShiftMask,             XK_Down,   spawn,          SHCMD("brightnessctl set 2%-") },
 	{ MODKEY,                       XK_p,      spawn,          SHCMD("rofi -show combi -modes combi -combi-modes 'drun,run'")},
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = dmenucmd} },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
