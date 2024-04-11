@@ -24,13 +24,17 @@ static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
+static const char col_cyan_light[]  = "#4fa19a";
 static const char col_yellow[]      = "#eff54e";
 static const char col_gray_metalish[]="#868fa3";
+static const char col_red[]         = "#82373c";
+static const char col_green_water[] = "#54c490";
+static const char col_blue_light[]  = "#a2e0d5";
 
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_gray_metalish  },
+	[SchemeSel]  = { col_gray4, col_cyan,  col_blue_light },
 };
 
 /* tagging */
@@ -43,19 +47,20 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	/* { "Gimp",     NULL,       NULL,       0,            1,           -1 }, */
-	   { "Steam",    NULL,       NULL,       1 << 8,       0,           0 },
+	   { "steam",    NULL,       NULL,       1 << 8,       1,           0 },
 	   { "Firefox",  NULL,       NULL,       1 << 1,       0,           0 },
 	   { "Firefox",  NULL,    "Picture-in-Picture",  0,    1,           0 },
 	   { "discord",  NULL,       NULL,       1 << 2,       0,           1 },
 	   { "Spotify",  NULL,       NULL,       1 << 1,       0,           1 },
 	   { "Thunar",   NULL,     "hardal - Thunar", 0,       1,          -1 },
+	   { "looking-glass-client", NULL, NULL, 1 << 8,       0,           0 },
 
 };
 
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 #define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
